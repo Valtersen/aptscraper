@@ -1,0 +1,28 @@
+services:
+
+  web:
+    build: .
+    network_mode: host
+    tty: true
+    command: bash -c "scrapyd-deploy local && curl -X POST -u debug:debug http://localhost:6800/schedule.json -d project=aptscraper -d spider=page_scraper -dusername=bebug -d password=debug"
+    depends_on:
+      - scrapyd
+
+  scrapyd:
+    build: scrapyd-authenticated/
+    ports:
+      - "6800:6800"
+    environment:
+        USERNAME: "debug"
+        PASSWORD: "debug"
+        PACKAGES: "sqlalchemy, psycopg2, requests"
+    restart: unless-stopped
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: "apartments"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "password"
+    ports:
+      - "5432:5432"
