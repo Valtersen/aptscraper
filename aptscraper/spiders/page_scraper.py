@@ -11,7 +11,7 @@ def send_ad_link(link):
         "spider": 'apt_scraper',
         "url": link
     }
-    requests.post(settings.HOST+":6800/schedule.json", data=payload, auth=HTTPBasicAuth('debug', 'debug'))
+    requests.post('http://'+settings.HOST+":6800/schedule.json", data=payload, auth=HTTPBasicAuth('debug', 'debug'))
 
 
 class PageScraperSpider(scrapy.Spider):

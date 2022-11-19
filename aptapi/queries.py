@@ -3,9 +3,9 @@ from datetime import datetime
 # from models import Apartment
 from sqlalchemy.orm import Session
 import json
-import settings
+from . import settings
 
-import models
+from . import models
 
 
 async def get_session():

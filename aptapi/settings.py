@@ -1,6 +1,6 @@
 DB_USER = 'postgres'
 DB_PASSWORD = 'password'
-DB_HOST = '127.0.0.1'
+HOST = 'host.docker.internal'
 DB_PORT = 5432
 DB_NAME = 'apartments'
 

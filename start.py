@@ -9,4 +9,4 @@ if __name__ == '__main__':
         "project": 'aptscraper',
         "spider": 'page_scraper',
     }
-    requests.post(settings.HOST + ":6800/schedule.json", auth=HTTPBasicAuth('debug', 'debug'), data=payload)
+    requests.post(f'http://{settings.HOST}:6800/schedule.json', auth=HTTPBasicAuth('debug', 'debug'), data=payload)

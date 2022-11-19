@@ -92,13 +92,8 @@ ITEM_PIPELINES = {
 REQUEST_FINGERPRINTER_IMPLEMENTATION = '2.7'
 TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
 
-#CLOSESPIDER_PAGECOUNT = 3
-
 DB_USER = 'postgres'
 DB_PASSWORD = 'password'
-#DB_HOST = '127.0.0.1'
-DB_HOST = 'host.docker.internal'
 DB_PORT = 5432
 DB_NAME = 'apartments'
-
-HOST = 'http://host.docker.internal'
+HOST = 'host.docker.internal'

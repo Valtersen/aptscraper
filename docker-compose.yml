@@ -4,7 +4,7 @@ services:
     build: .
     network_mode: host
     tty: true
-    command: bash -c "scrapyd-deploy local && curl -X POST -u debug:debug http://localhost:6800/schedule.json -d project=aptscraper -d spider=page_scraper -dusername=bebug -d password=debug"
+    command: bash -c "scrapyd-deploy local && python start.py"
     depends_on:
       - scrapyd
 

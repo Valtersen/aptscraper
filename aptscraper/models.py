@@ -10,7 +10,7 @@ Base = declarative_base()
 
 def db_engine():
 
-    engine = create_engine(f"postgresql://{settings.DB_USER}:{settings.DB_PASSWORD}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}")
+    engine = create_engine(f"postgresql://{settings.DB_USER}:{settings.DB_PASSWORD}@{settings.HOST}:{settings.DB_PORT}/{settings.DB_NAME}")
     return engine
 
 
