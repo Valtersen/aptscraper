@@ -1,0 +1,11 @@
+asyncio==3.4.3
+Scrapy==2.5.0
+scrapyd==1.2.1
+redis
+requests
+rq
+raven
+pyyaml==5.4.1
+pyopenssl==22.0.0
+sqlalchemy
+psycopg2

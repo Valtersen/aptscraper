@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+ app:
+  image: aptscraper
+  build: ./aptapi
+  command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+  volumes:
+   - .:/usr/src/app/
+  ports:
+   - 8000:8000
+  container_name: aptscraper
+  environment:
+   - HOST=localhost
+  depends_on:
+   - scrapyd
+
+ scrapyd:
+  image: easypi/scrapyd
+  ports:
+   - "6800:6800"
+  volumes:
+   - ./data:/var/lib/scrapyd
+   - /usr/local/lib/python3.9/dist-packages
+  restart: unless-stopped
+
+ scrapy:
+   image: easypi/scrapyd
+   command: bash
+   volumes:
+    - .:/code
+   working_dir: /code
+   restart: unless-stopped
