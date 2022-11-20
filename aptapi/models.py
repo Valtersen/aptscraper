@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, Column
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (Integer, String, Date, DateTime, Float, Text)
 
-from . import settings
+import settings
 
 
 Base = declarative_base()
@@ -36,7 +36,7 @@ class Apartment(Base):
     # attributes
     forrentbyhousing = Column(String)
     unittype = Column(String)
-    numberbedrooms = Column(Float)
+    numberbedrooms = Column(String)
     numberbathrooms = Column(Float)
     agreementtype = Column(String)
     dateavailable = Column(Date)

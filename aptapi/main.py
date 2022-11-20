@@ -1,4 +1,4 @@
-from . import views
+import views
 from fastapi import FastAPI
 
 app = FastAPI()

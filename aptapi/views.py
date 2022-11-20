@@ -1,7 +1,7 @@
 import fastapi
 from starlette.responses import Response
 from fastapi import Request
-from .queries import *
+from queries import *
 
 
 router = fastapi.APIRouter()

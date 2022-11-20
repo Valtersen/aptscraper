@@ -6,6 +6,7 @@
 #     https://docs.scrapy.org/en/latest/topics/settings.html
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import os
 
 BOT_NAME = 'aptscraper'
 
@@ -90,10 +91,10 @@ ITEM_PIPELINES = {
 
 # Set settings whose default value is deprecated to a future-proof value
 REQUEST_FINGERPRINTER_IMPLEMENTATION = '2.7'
-TWISTED_REACTOR = 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'
 
-DB_USER = 'postgres'
-DB_PASSWORD = 'password'
+DB_USER = os.environ.get('POSTGRES_USER', '')
+DB_PASSWORD = os.environ.get('POSTGRES_PASSWORD', '')
+DB_NAME = os.environ.get('POSTGRES_DB', '')
 DB_PORT = 5432
-DB_NAME = 'apartments'
+DB_HOST = 'postgres'
 HOST = 'host.docker.internal'

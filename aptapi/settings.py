@@ -1,8 +1,10 @@
-DB_USER = 'postgres'
-DB_PASSWORD = 'password'
-HOST = 'host.docker.internal'
+import os
+
+DB_USER = os.environ.get('POSTGRES_USER', '')
+DB_PASSWORD = os.environ.get('POSTGRES_PASSWORD', '')
+DB_NAME = os.environ.get('POSTGRES_DB', '')
+HOST = 'postgres'
 DB_PORT = 5432
-DB_NAME = 'apartments'
 
 
 apt_unit_attributes_1 = {'city', 'forrentbyhousing', 'unittype',

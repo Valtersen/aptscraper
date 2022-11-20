@@ -1,27 +1,44 @@
 services:
-
-  web:
-    build: .
+  scraper:
+    build: ./aptscraper
     network_mode: host
-    tty: true
     command: bash -c "scrapyd-deploy local && python start.py"
+    tty: true
     depends_on:
       - scrapyd
 
+  api:
+    build: ./aptapi
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    depends_on:
+      - postgres
+
   scrapyd:
-    build: scrapyd-authenticated/
+    build:
+      context: ./scrapyd-authenticated
     ports:
       - "6800:6800"
     environment:
         USERNAME: "debug"
         PASSWORD: "debug"
-        PACKAGES: "sqlalchemy, psycopg2, requests"
+        POSTGRES_DB: ${POSTGRES_DB}
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     restart: unless-stopped
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres
     environment:
-      POSTGRES_DB: "apartments"
+      POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: "postgres"
       POSTGRES_PASSWORD: "password"
     ports:
