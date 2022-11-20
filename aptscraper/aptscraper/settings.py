@@ -98,3 +98,4 @@ DB_NAME = os.environ.get('POSTGRES_DB', '')
 DB_PORT = 5432
 DB_HOST = 'postgres'
 HOST = 'host.docker.internal'
+

@@ -2,7 +2,11 @@ services:
   scraper:
     build: ./aptscraper
     network_mode: host
-    command: bash -c "scrapyd-deploy local && python start.py"
+    command: bash -c 'echo -e "\nusername=${SCRAPYD_USERNAME} \npassword=${SCRAPYD_PASSWORD}" >> "scrapy.cfg"
+              && scrapyd-deploy default && python start.py'
+    environment:
+      USERNAME: ${SCRAPYD_USERNAME}
+      PASSWORD: ${SCRAPYD_PASSWORD}
     tty: true
     depends_on:
       - scrapyd
@@ -26,8 +30,8 @@ services:
     ports:
       - "6800:6800"
     environment:
-        USERNAME: "debug"
-        PASSWORD: "debug"
+        USERNAME: ${SCRAPYD_USERNAME}
+        PASSWORD: ${SCRAPYD_PASSWORD}
         POSTGRES_DB: ${POSTGRES_DB}
         POSTGRES_USER: ${POSTGRES_USER}
         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -39,7 +43,7 @@ services:
     image: postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "password"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"

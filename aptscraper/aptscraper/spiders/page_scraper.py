@@ -1,3 +1,5 @@
+import os
+
 import requests
 import scrapy
 from requests.auth import HTTPBasicAuth
@@ -11,11 +13,12 @@ def send_ad_link(link):
         "spider": 'apt_scraper',
         "url": link
     }
-    requests.post('http://'+settings.HOST+":6800/schedule.json", data=payload, auth=HTTPBasicAuth('debug', 'debug'))
+    authentication = HTTPBasicAuth(os.environ.get('USERNAME', 'debug'),
+                                   os.environ.get('PASSWORD', 'debug'))
+    requests.post('http://' + settings.HOST + ":6800/schedule.json", data=payload, auth=authentication)
 
 
 class PageScraperSpider(scrapy.Spider):
-
     name = 'page_scraper'
     allowed_domains = ['www.kijiji.ca']
     start_urls = ['https://www.kijiji.ca/b-apartments-condos/charlottetown-pei/c37l1700119'
@@ -32,7 +35,7 @@ class PageScraperSpider(scrapy.Spider):
     def parse(self, response):
         links = response.xpath(
             '//div[@class="container-results large-images"]/div[@data-listing-id]/@data-vip-url').getall()
-        for link in links[:3]:
+        for link in links:
             full_link = 'https://www.kijiji.ca' + link
             send_ad_link(full_link)
 
