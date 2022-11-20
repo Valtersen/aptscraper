@@ -2,8 +2,7 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-
-
+from sqlalchemy.exc import IntegrityError
 # useful for handling different item types with a single interface
 from sqlalchemy.orm import Session
 from . import models
@@ -29,9 +28,8 @@ class AptscraperPipeline:
             self.session.add(apartment)
             self.session.commit()
 
-        except:
+        except IntegrityError:
             self.session.rollback()
-            raise Exception
 
         finally:
             self.session.close()
