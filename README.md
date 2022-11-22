@@ -79,4 +79,5 @@ e.g.:
 - numberbathrooms
 - dateavailable
 - numberparkingspots
+- numberbedrooms
 - areainfeet
