@@ -28,4 +28,3 @@ async def apartments(request: Request):
         return 'Wrong data input'
 
     return Response(resp)
-

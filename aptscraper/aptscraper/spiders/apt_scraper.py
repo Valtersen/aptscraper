@@ -14,23 +14,12 @@ class AptScraperSpider(scrapy.Spider):
         super(AptScraperSpider, self).__init__(*args, **kwargs)
         self.start_urls.append(kwargs.get('url'))
 
-    def get_phone_number(self, adId, sellerId, vipUrl, sellerName, listingType='rent'):
-        payload = [{
-            "operationName": "GetDynamicPhoneNumber",
-            "variables": {"adId": str(adId), "sellerId": str(sellerId), "vipUrl": vipUrl, "listingType": listingType,
-                          "sellerName": sellerName},
-            "query": "query GetDynamicPhoneNumber($sellerId: String!, $adId: String!, $userId: String, $vipUrl: String!, "
-                     "$listingType: String!, $sellerName: String!) {getDynamicPhoneNumber(sellerId: $sellerId, adId: $adId, "
-                     "userId: $userId, vipUrl: $vipUrl, listingType: $listingType, sellerName: $sellerName) {local e164 __typename}}"
-        }]
+    def get_phone(self, token):
         headers = {'Content-Type': 'application/json',
                    'User-Agent': settings.USER_AGENT
                    }
-        resp = requests.post('https://www.kijiji.ca/anvil/api', json=payload, headers=headers)
-        if 'errors' in resp.json()[0]:
-            return
-        resp = resp.json()[0]['data']['getDynamicPhoneNumber']['local']
-        return resp
+        response = requests.get('https://www.kijiji.ca/j-vac-phone-get.json?token=' + token, headers=headers)
+        return response.json()['phone']
 
     def parse(self, response):
 
@@ -48,8 +37,10 @@ class AptScraperSpider(scrapy.Spider):
         apartment['owner_id'] = script_json['config']['VIP']['posterId']
         name = script_json['config']['VIP']['sellerName']
         apartment['owner_name'] = name if name else script_json['config']['profile']["postersCompanyName"]
-        apartment['owner_phone'] = self.get_phone_number(apartment['id'], apartment['owner_id'],
-                                                         apartment['url'], apartment['owner_name'])
+        if 'phoneToken' in script_json['config']['profile']:
+            apartment['owner_phone'] = self.get_phone(script_json['config']['profile']['phoneToken'])
+        else:
+            apartment['owner_phone'] = None
         price = script_json['config']['VIP']['price']['amount'] / 100
         apartment['price'] = price
         ad_attributes = script_json['config']['VIP']['adAttributes']
