@@ -16,6 +16,13 @@ https://github.com/namiwa/scrapyd-authenticated
 # database and Scrapyd configuration
 change values in ```.env``` file
 
+
+Scrapyd configuration is in ```scrapyd-authenticated/scrapyd.conf```
+
+To make scraping faster change `max_proc`, `max_proc_per_cpu` and `poll_interval` (Float), 
+more on [Scrapyd Configuration file](https://scrapyd.readthedocs.io/en/stable/config.html).
+
+
 # API:
 
 ```/api/apartments``` for all apartments
