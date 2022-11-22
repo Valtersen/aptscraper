@@ -36,7 +36,7 @@ class Apartment(Base):
     # attributes
     forrentbyhousing = Column(String)
     unittype = Column(String)
-    numberbedrooms = Column(String)
+    numberbedrooms = Column(Float)
     numberbathrooms = Column(Float)
     agreementtype = Column(String)
     dateavailable = Column(Date)

@@ -56,8 +56,8 @@ class AptScraperSpider(scrapy.Spider):
         for atr in ad_attributes:
             key = atr['machineKey']
             val = atr['machineValue']
-            if key == 'numberbathrooms' or key == 'numberbedrooms':
-                val = atr['localeSpecificValues']['en']['value']
+            if key == 'numberbathrooms':
+                val = float(val)/10
             apartment[key] = val
 
         yield apartment

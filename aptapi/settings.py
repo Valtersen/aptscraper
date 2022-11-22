@@ -15,5 +15,5 @@ apt_unit_attributes_1 = {'city', 'forrentbyhousing', 'unittype',
  'audioprompts', 'barrierfreeentrancesandramps', 'visualaids', 'accessiblewashroomsinsuite',
  'hydro', 'heat', 'water', 'cabletv', 'internet'}
 
-apt_unit_attributes_2 = {'posted', 'price', 'numberbedrooms', 'dateavailable',
+apt_unit_attributes_2 = {'posted', 'price', 'numberbedrooms', 'numberbathrooms', 'dateavailable',
                           'numberparkingspots', 'areainfeet'}

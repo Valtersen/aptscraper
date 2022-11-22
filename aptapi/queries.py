@@ -1,10 +1,6 @@
-from datetime import datetime
-
-# from models import Apartment
 from sqlalchemy.orm import Session
 import json
 import settings
-
 import models
 
 
@@ -34,17 +30,6 @@ async def get_apt_filters(session: Session, **kwargs):
 
     for kwarg, kvalue in kwargs.items():
 
-        # check if date attribute
-        if 'posted' in kwarg or 'dateavailable' in kwarg:
-            try:
-                kwargs[kwarg] = datetime.strptime(kwargs[kwarg], "%Y-%m-%d")
-            except ValueError:
-                pass
-            try:
-                kwargs[kwarg] = datetime.strptime(kwargs[kwarg], "%Y-%m-%d %H:%M:%S")
-            except ValueError:
-                return 'Wrong data input'
-
         # check if true/false attributes
         if kwarg in settings.apt_unit_attributes_1 \
                 or kwarg in settings.apt_unit_attributes_2:
@@ -54,7 +39,7 @@ async def get_apt_filters(session: Session, **kwargs):
         # check if range attribute
         if 'min_' in kwarg and kwarg.replace('min_', '') in settings.apt_unit_attributes_2:
             kwarg = kwarg.replace('min_', '')
-            queue = queue.filter(getattr(models.Apartment, kwarg) <= kvalue)
+            queue = queue.filter(getattr(models.Apartment, kwarg) >= kvalue)
 
         if 'max_' in kwarg and kwarg.replace('max_', '') in settings.apt_unit_attributes_2:
             kwarg = kwarg.replace('max_', '')

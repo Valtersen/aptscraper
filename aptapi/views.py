@@ -3,7 +3,6 @@ from starlette.responses import Response
 from fastapi import Request
 from queries import *
 
-
 router = fastapi.APIRouter()
 
 
@@ -22,9 +21,11 @@ async def apartments(id: int=None):
 @router.get('/api/apartments/filter/')
 async def apartments(request: Request):
     kwargs = request.query_params
-    apts = await get_apt_filters(await get_session(), **kwargs)
-    if apts == 'Wrong data input':
-        return apts
-    resp = await process_objects(apts)
+    try:
+        apts = await get_apt_filters(await get_session(), **kwargs)
+        resp = await process_objects(apts)
+    except Exception:
+        return 'Wrong data input'
+
     return Response(resp)
 

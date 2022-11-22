@@ -10,7 +10,9 @@ Base = declarative_base()
 
 def db_engine():
 
-    engine = create_engine(f"postgresql://{settings.DB_USER}:{settings.DB_PASSWORD}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}")
+    #engine = create_engine(f"postgresql://{settings.DB_USER}:{settings.DB_PASSWORD}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}")
+    engine = create_engine("postgresql://postgres:password@127.0.0.1:5432/apartments")
+
     return engine
 
 
@@ -36,7 +38,7 @@ class Apartment(Base):
     # attributes
     forrentbyhousing = Column(String)
     unittype = Column(String)
-    numberbedrooms = Column(String)
+    numberbedrooms = Column(Float)
     numberbathrooms = Column(Float)
     agreementtype = Column(String)
     dateavailable = Column(Date)
